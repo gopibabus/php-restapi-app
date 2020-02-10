@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="https://www.assets.gopibabu.live/images/favicon-32x32.png" type="image/x-icon">
     <title>PHP API</title>
     <link
         rel="stylesheet"
