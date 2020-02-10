@@ -1,0 +1,9 @@
+php_flag display_errors on
+
+# Allow files and folders which are directly called
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME}% !-d
+RewriteCond %{REQUEST_FILENAME}% !-f
+
+# Replace v1/controller/task.php?task_id=1   with v1/tasks/1
+RewriteRule ^tasks/([0-9]+)$ controller/task.php?task_id=$1 [L]
