@@ -1,5 +1,11 @@
 # REST API-PHP
 
+## Instructions to deploy
+
+```
+git pull origin master
+```
+
 This project focuses on implementing Restful web services using simple vanilla PHP
 
 ## Scenario
