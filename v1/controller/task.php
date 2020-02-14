@@ -33,7 +33,7 @@ if (array_key_exists("task_id", $_GET)) {
         try {
             $query = $readDB->prepare(
                 'SELECT id, title, description, deadline, completed 
-                            from tbl_tasks where id = :task_id'
+                            FROM tbl_tasks WHERE id = :task_id'
             );
             $query->bindParam(':task_id', $task_id, PDO::PARAM_INT);
             $query->execute();
@@ -72,7 +72,6 @@ if (array_key_exists("task_id", $_GET)) {
             $response->setData($returnData);
             $response->send();
             exit;
-
         } catch (PDOException $ex) {
             error_log("Database Query error -" . $ex, 0);
             $response = new Response();
@@ -89,11 +88,38 @@ if (array_key_exists("task_id", $_GET)) {
             $response->send();
             exit;
         }
-
     } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
+        try {
+            $query = $writeDb->prepare('DELETE FROM tbl_tasks WHERE id= :task_id');
+            $query->bindParam(':task_id', $task_id, PDO::PARAM_INT);
+            $query->execute();
+            $rowCount = $query->rowCount();
 
+            if ($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(404);
+                $response->setSuccess(false);
+                $response->addMessage("Task not found");
+                $response->send();
+                exit;
+            }
+
+            $response = new Response();
+            $response->setHttpStatusCode(200);
+            $response->setSuccess(true);
+            $response->addMessage("Task deleted");
+            $response->send();
+            exit;
+        } catch (PDOException $ex) {
+            $response = new Response();
+            $response->setHttpStatusCode(500);
+            $response->setSuccess(false);
+            $response->addMessage("Failed to delete Task");
+            $response->send();
+            exit;
+        }
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
     } else {
         $response = new Response();
         $response->setHttpStatusCode(405);
@@ -102,6 +128,4 @@ if (array_key_exists("task_id", $_GET)) {
         $response->send();
         exit;
     }
-
 }
-
