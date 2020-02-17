@@ -33,3 +33,4 @@ document.getElementById("getTask").addEventListener("click", updateLink);
 document.getElementById("deleteTask").addEventListener("click", updateLink);
 document.getElementById("completedTasks").addEventListener("click", updateLink);
 document.getElementById("incompletedTasks").addEventListener("click", updateLink);
+document.getElementById("allTasks").addEventListener("click", updateLink);

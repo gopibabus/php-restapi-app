@@ -24,8 +24,11 @@
         <button id="completedTasks" type="button" class="btn btn-lg btn-success form-control mt-3" data-toggle="modal" data-target="#urlModal">
             GET ALL COMPLETED TASKS
         </button>
-        <button id="incompletedTasks" type="button" class="btn btn-lg btn-success form-control mt-3" data-toggle="modal" data-target="#urlModal">
+        <button id="incompletedTasks" type="button" class="btn btn-lg btn-secondary form-control mt-3" data-toggle="modal" data-target="#urlModal">
             GET ALL INCOMPLETED TASKS
+        </button>
+        <button id="allTasks" type="button" class="btn btn-lg btn-info form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            GET ALL TASKS
         </button>
 
     </div>
