@@ -3,29 +3,31 @@
  * @param {object} event
  */
 function updateLink(event) {
-  console.log(event);
-  switch (event.target.innerHTML.trim()) {
-    case "GET TASK":
+  switch (event.toElement.id) {
+    case "getTask":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
       break;
-    case "DELETE TASK":
+    case "deleteTask":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
       break;
-    case "GET ALL COMPLETED TASKS":
+    case "completedTasks":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/complete");
       break;
-    case "GET ALL INCOMPLETED TASKS":
+    case "incompletedTasks":
       updateMainModelContent(
         "https://restapi.gopibabu.live/v1/tasks/incomplete"
       );
       break;
-    case "GET ALL TASKS":
+    case "allTasks":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks");
       break;
-    case "GET ALL TASKS BY PAGE":
+    case "tasksByPageNumber":
       updateMainModelContent(
         "https://restapi.gopibabu.live/v1/tasks/page/{number}"
       );
+      break;
+    case "createNewTask":
+      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks");
       break;
     default:
       updateMainModelContent("API is not yet designed!!");
@@ -50,3 +52,4 @@ document.getElementById("allTasks").addEventListener("click", updateLink);
 document
   .getElementById("tasksByPageNumber")
   .addEventListener("click", updateLink);
+document.getElementById("createNewTask").addEventListener("click", updateLink);

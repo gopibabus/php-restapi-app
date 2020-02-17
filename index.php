@@ -33,6 +33,9 @@
         <button id="tasksByPageNumber" type="button" class="btn btn-lg btn-danger form-control mt-3" data-toggle="modal" data-target="#urlModal">
             GET ALL TASKS BY PAGE
         </button>
+        <button id="createNewTask" type="button" class="btn btn-lg btn-primary form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            CREATE NEW TASK (POST)
+        </button>
 
     </div>
 
