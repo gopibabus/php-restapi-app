@@ -10,6 +10,12 @@ function updateLink(event) {
     case "DELETE TASK":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/3");
       break;
+    case "GET ALL COMPLETED TASKS":
+      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/complete");
+      break;
+    case "GET ALL INCOMPLETED TASKS":
+      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/incomplete");
+      break;
     default:
       updateMainModelContent("API is not yet designed!!");
   }
@@ -25,4 +31,5 @@ function updateMainModelContent(api) {
 
 document.getElementById("getTask").addEventListener("click", updateLink);
 document.getElementById("deleteTask").addEventListener("click", updateLink);
-document.getElementById("patchTask").addEventListener("click", updateLink);
+document.getElementById("completedTasks").addEventListener("click", updateLink);
+document.getElementById("incompletedTasks").addEventListener("click", updateLink);

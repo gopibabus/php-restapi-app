@@ -14,15 +14,18 @@
 <body>
     <div class="container">
         <h1 class="text-center display-3">PHP API</h1>
-        <h3 class="text-center display-4">Following are list of APIs available</h3>
+        <h3 class="text-center display-4">List of APIs available</h3>
         <button id="getTask" type="button" class="btn btn-lg btn-primary form-control mt-5" data-toggle="modal" data-target="#urlModal">
             GET TASK
         </button>
         <button id="deleteTask" type="button" class="btn btn-lg btn-warning form-control mt-3" data-toggle="modal" data-target="#urlModal">
             DELETE TASK
         </button>
-        <button id="patchTask" type="button" class="btn btn-lg btn-success form-control mt-3" data-toggle="modal" data-target="#urlModal">
-            PATCH TASK
+        <button id="completedTasks" type="button" class="btn btn-lg btn-success form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            GET ALL COMPLETED TASKS
+        </button>
+        <button id="incompletedTasks" type="button" class="btn btn-lg btn-success form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            GET ALL INCOMPLETED TASKS
         </button>
 
     </div>
@@ -37,7 +40,7 @@
                     </button>
                 </div>
                 <div id="mainModalContent" class="modal-body border border-primary shadow-sm m-3">
-                    https://restapi.gopibabu.live/v1/tasks/3
+                    https://restapi.gopibabu.live
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
