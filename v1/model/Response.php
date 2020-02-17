@@ -39,7 +39,7 @@ class Response
         header('Content-type: application/json;charset=utf-8');
 
         if ($this->_toCache == true) {
-            header('Cache-control: max-age=60');
+            header('Cache-control: max-age=0');
         } else {
             header('Cache-control: no-cache, no-store');
         }
@@ -53,7 +53,6 @@ class Response
             $this->_responseData['success'] = false;
             $this->addMessage("Response creation error");
             $this->_responseData['messages'] = $this->_messages;
-
         } else {
             http_response_code($this->_httpStatusCode);
             $this->_responseData['statusCode'] = $this->_httpStatusCode;

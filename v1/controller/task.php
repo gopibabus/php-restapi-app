@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 'true');
 require_once('db.php');
 require_once('../model/Task.php');
 require_once('../model/Response.php');
