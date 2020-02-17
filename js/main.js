@@ -3,12 +3,13 @@
  * @param {object} event
  */
 function updateLink(event) {
+  console.log(event);
   switch (event.target.innerHTML.trim()) {
     case "GET TASK":
-      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/3");
+      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
       break;
     case "DELETE TASK":
-      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/3");
+      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
       break;
     case "GET ALL COMPLETED TASKS":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/complete");
@@ -20,6 +21,11 @@ function updateLink(event) {
       break;
     case "GET ALL TASKS":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks");
+      break;
+    case "GET ALL TASKS BY PAGE":
+      updateMainModelContent(
+        "https://restapi.gopibabu.live/v1/tasks/page/{number}"
+      );
       break;
     default:
       updateMainModelContent("API is not yet designed!!");
@@ -41,3 +47,6 @@ document
   .getElementById("incompletedTasks")
   .addEventListener("click", updateLink);
 document.getElementById("allTasks").addEventListener("click", updateLink);
+document
+  .getElementById("tasksByPageNumber")
+  .addEventListener("click", updateLink);
