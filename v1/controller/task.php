@@ -151,15 +151,15 @@ if (array_key_exists("task_id", $_GET)) {
             $rowCount = $query->rowCount();
             $taskArray = [];
 
-            while($row = $query->fetch(PDO::FETCH_ASSOC)){
-              $task = new Task(
-                  $row['id'], 
-                  $row['title'], 
-                  $row['description'], 
-                  $row['deadline'], 
-                  $row['completed']
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                $task = new Task(
+                    $row['id'],
+                    $row['title'],
+                    $row['description'],
+                    $row['deadline'],
+                    $row['completed']
                 );
-             $taskArray[] =  $task->returnTaskAsArray();
+                $taskArray[] =  $task->returnTaskAsArray();
             }
 
             $returnData = [];
@@ -173,7 +173,6 @@ if (array_key_exists("task_id", $_GET)) {
             $response->setData($returnData);
             $response->send();
             exit;
-
         } catch (TaskException $ex) {
             $response = new Response();
             $response->setHttpStatusCode(500);
@@ -182,7 +181,7 @@ if (array_key_exists("task_id", $_GET)) {
             $response->send();
             exit;
         } catch (PDOException $ex) {
-            error_log("Database query error -". $ex, 0);
+            error_log("Database query error -" . $ex, 0);
             $response = new Response();
             $response->setHttpStatusCode(500);
             $response->setSuccess(false);
@@ -198,4 +197,70 @@ if (array_key_exists("task_id", $_GET)) {
         $response->send();
         exit;
     }
+} elseif (empty($_GET)) {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        try {
+            $query = $readDB->prepare(
+                'SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/$Y %H:%i") as deadline, completed 
+                            FROM tbl_tasks'
+            );
+            $query->execute();
+
+            $rowCount = $query->rowCount();
+
+            $tasksArray = [];
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                $task = new Task(
+                    $row['id'],
+                    $row['title'],
+                    $row['description'],
+                    $row['deadline'],
+                    $row['completed']
+                );
+                $tasksArray[] = $task->returnTaskAsArray();
+            }
+
+            $returnData = [];
+            $returnData['rows_returned'] = $rowCount;
+            $returnData['tasks'] = $tasksArray;
+
+            $response = new Response();
+            $response->setHttpStatusCode(200);
+            $response->setSuccess(true);
+            $response->toCache(true);
+            $response->setData($returnData);
+            $response->send();
+            exit;
+        } catch (TaskException $ex) {
+            $response = new Response();
+            $response->setHttpStatusCode(500);
+            $response->setSuccess(false);
+            $response->addMessage($ex->getMessage());
+            $response->send();
+            exit;
+        } catch (PDOException $ex) {
+            error_log("Database query error - " . $ex, 0);
+            $response = new Response();
+            $response->setHttpStatusCode(500);
+            $response->setSuccess(false);
+            $response->addMessage("Failed to get tasks");
+            $response->send();
+            exit;
+        }
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    } else {
+        $response = new Response();
+        $response->setHttpStatusCode(405);
+        $response->setSuccess(false);
+        $response->addMessage("Request method not allowed");
+        $response->send();
+        exit;
+    }
+} else {
+    $response = new Response();
+    $response->setHttpStatusCode(404);
+    $response->setSuccess(false);
+    $response->addMessage("Endpoint not found");
+    $response->send();
+    exit;
 }
