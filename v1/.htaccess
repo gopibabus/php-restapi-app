@@ -19,4 +19,7 @@ RewriteRule ^tasks/page/([0-9]+)$ controller/task.php?page=$1 [L]
 # Replace v1/controller/task.php   with v1/tasks
 RewriteRule ^tasks$ controller/task.php [L]
 
+# Replace v1/controller/users.php   with v1/users
+RewriteRule ^users$ controller/users.php [L]
+
 
