@@ -17,7 +17,7 @@ class Task
     {
         $this->setID($id);
         $this->setTitle($title);
-        $this->setDeadline($description);
+        $this->setDescription($description);
         $this->setDeadline($deadline);
         $this->setCompleted($completed);
     }
@@ -56,7 +56,6 @@ class Task
                 $this->_id !== null)
         ) {
             throw new TaskException("Task ID Error");
-
         }
         $this->_id = $id;
     }
@@ -79,13 +78,13 @@ class Task
 
     public function setDeadline($deadline)
     {
-//        date_format(
-//            date_create_from_format('d/m/Y H:i', $deadline),
-//            'd/m/Y H:i'
-//        ) != $deadline;
-//        if ($deadline == null) {
-//            throw new TaskException("Task deadline date time error");
-//        }
+        //        date_format(
+        //            date_create_from_format('d/m/Y H:i', $deadline),
+        //            'd/m/Y H:i'
+        //        ) != $deadline;
+        //        if ($deadline == null) {
+        //            throw new TaskException("Task deadline date time error");
+        //        }
         $this->_deadline = $deadline;
     }
 
