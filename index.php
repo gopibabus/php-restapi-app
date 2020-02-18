@@ -42,6 +42,9 @@
         <button id="createUser" type="button" class="btn btn-lg btn-success form-control mt-3" data-toggle="modal" data-target="#urlModal">
             CREATE A USER
         </button>
+        <button id="createSession" type="button" class="btn btn-lg btn-secondary form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            CREATE A SESSION FOR A VALID USER
+        </button>
 
     </div>
 
@@ -57,22 +60,9 @@
                 <div id="mainModalContent" class="modal-body border border-primary shadow-sm m-3">
                     https://restapi.gopibabu.live
                 </div>
-                <code id="modalCode" class=" m-3 p-3 border border-primary">
-                    {<br>
-                    "title" : "New Title",<br>
-                    "completed" : "Y",<br>
-                    "description": "New task description",<br>
-                    "deadline" : "09/02/2020 13:00"<br>
-                    }<br>
-                </code><br>
-                <code id="modalCodeUsers" class=" m-3 p-3 border border-primary">
-                    {<br>
-                    "fullname" : "John Marty",<br>
-                    "username" : "johnm",<br>
-                    "password": "Mjohn123456",<br>
-                    }<br>
-                </code><br>
-                <div class="modal-footer">
+                <section id="codeSection">
+                </section>
+                <div id="mainFooter" class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>

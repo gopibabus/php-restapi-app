@@ -84,7 +84,7 @@
 
     try {
       $query = $writeDb->prepare(
-        'SELECT id. fullname, username, password, useractive, loginattempts 
+        'SELECT id, fullname, username, password, useractive, loginattempts 
                 FROM tbl_users WHERE username = :username'
       );
       $query->bindParam(':username', $username, PDO::PARAM_STR);
@@ -141,12 +141,79 @@
         exit;
       }
 
+      $accessToken = base64_encode(bin2hex(openssl_random_pseudo_bytes(24)) . time());
+      $refreshToken = base64_encode(bin2hex(openssl_random_pseudo_bytes(24)) . time());
 
+      /**
+       * 12 seconds
+       */
+      $access_token_expiry = 1200;
+      /**
+       * 14 days
+       */
+      $refresh_token_expiry = 1209600;
     } catch (PDOException $ex) {
       $response = new Response();
       $response->setHttpStatusCode(500);
       $response->setSuccess(false);
       $response->addMessage("There was a issue logging in");
+      $response->send();
+      exit;
+    }
+
+    try {
+      $writeDb->beginTransaction();
+
+      $query = $writeDb->prepare('
+      UPDATE tbl_users SET loginattempts = 0 WHERE id = :id
+      ');
+
+      $query->bindParam(':id', $returned_id, PDO::PARAM_INT);
+      $query->execute();
+
+      $query = $writeDb->prepare(
+        'INSERT INTO tbl_sessions 
+                (userid, accesstoken, accesstokenexpiry, refreshtoken, refreshtokenexpiry) 
+                values (
+                        :userid, 
+                        :accesstoken, 
+                        date_add(NOW(), INTERVAL :accesstokenexpiryseconds SECOND), 
+                        :refreshtoken, 
+                        date_add(NOW(), INTERVAL :refreshtokenexpiryseconds SECOND))'
+      );
+
+      $query->bindParam(':userid', $returned_id, PDO::PARAM_INT);
+      $query->bindParam(':accesstoken', $accessToken, PDO::PARAM_STR);
+      $query->bindParam(':accesstokenexpiryseconds', $access_token_expiry, PDO::PARAM_INT);
+      $query->bindParam(':refreshtoken', $refreshToken, PDO::PARAM_STR);
+      $query->bindParam(':refreshtokenexpiryseconds', $refresh_token_expiry, PDO::PARAM_INT);
+
+      $query->execute();
+
+
+      $lastSessionId = $writeDb->lastInsertId();
+      $writeDb->commit();
+
+      $returnData = [];
+      $returnData['session_id'] = intval($lastSessionId);
+      $returnData['access_token'] = $accessToken;
+      $returnData['access_token_expires_in'] = $access_token_expiry;
+      $returnData['refresh_token'] = $refreshToken;
+      $returnData['refresh_token_expires_in'] = $refresh_token_expiry;
+
+      $response = new Response();
+      $response->setHttpStatusCode(201);
+      $response->setSuccess(true);
+      $response->setData($returnData);
+      $response->send();
+      exit;
+
+    } catch (PDOException $ex) {
+      $writeDb->rollBack();
+      $response = new Response();
+      $response->setHttpStatusCode(500);
+      $response->setSuccess(false);
+      $response->addMessage("There was a issue logging in - please try again");
       $response->send();
       exit;
     }

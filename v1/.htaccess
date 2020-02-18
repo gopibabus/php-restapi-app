@@ -22,4 +22,5 @@ RewriteRule ^tasks$ controller/task.php [L]
 # Replace v1/controller/users.php   with v1/users
 RewriteRule ^users$ controller/users.php [L]
 
-
+# Replace v1/controller/sessions.php   with v1/sessions
+RewriteRule ^sessions$ controller/sessions.php [L]
