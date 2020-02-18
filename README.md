@@ -30,7 +30,7 @@ This project focuses on implementing Restful web services using simple vanilla P
 
 ## HTTP Verbs
 
-| HTTP Verb | Functionality |
+| HTTP Verb | Action |
 | --------- | ------------- |
 | POST      | Create        |
 | GET       | Retrieve      |
@@ -88,3 +88,28 @@ This project focuses on implementing Restful web services using simple vanilla P
 - Login a user using a URL of : **/sessions**
 - Logout a user using a URL of : **/sessions/{:sessionid}**
 - Limited lifetime of a session access token, refreshed using a URL of : **/sessions/{:sessionid}**
+
+## What is Token Based Authentication ?
+
+- A token is like a password with a limited life span.
+
+- When a user authenticates with a username and password theyt are given 2 tokens: an access token and a refresh token.
+
+- An access token has a really short lifespan(usually minutes or hours)
+- A refresh token is valid for a lot longer (usually weeks or months)
+- Both tokens are usually just a random set of base64 encoded characters
+
+```
+example: KUPDfxgdsWef2kJVjtGss1X6ra5UA==
+```
+
+- A random base64 encoded string is sent in the HTTP headerr and this is used as a password to authenticate you for every request.
+
+- When a access token expires, you then use the refresh token to get a new access token (and a accompanying new refrsh token).
+
+- The reason why a refresh token has longer lifespan is because it is only ever sent with a request to get a new access token. So it is less likely to be leaked or exposed to a potential hacker.
+
+- We use sessions so we can use the system from multiple devices at the same time.
+
+![autherization workflow](https://restapi.gopibabu.live/images/authentication_workflow.png)
+
