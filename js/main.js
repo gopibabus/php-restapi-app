@@ -27,10 +27,13 @@ function updateLink(event) {
       );
       break;
     case "createNewTask":
-      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks");
+      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks", true);
       break;
     case "updateTask":
-      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
+      updateMainModelContent(
+        "https://restapi.gopibabu.live/v1/tasks/{number}",
+        true
+      );
       break;
     default:
       updateMainModelContent("API is not yet designed!!");
@@ -41,8 +44,14 @@ function updateLink(event) {
  * Update modal text with content
  * @param {string} api
  */
-function updateMainModelContent(api) {
+function updateMainModelContent(api, code_display = false) {
   document.getElementById("mainModalContent").innerHTML = api;
+  let code = document.getElementById("modalCode");
+  if (code_display == false) {
+    code.style.display = "none";
+  } else {
+    code.style.display = "block";
+  }
 }
 
 document.getElementById("getTask").addEventListener("click", updateLink);
