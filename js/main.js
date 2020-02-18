@@ -29,6 +29,9 @@ function updateLink(event) {
     case "createNewTask":
       updateMainModelContent("https://restapi.gopibabu.live/v1/tasks");
       break;
+    case "updateTask":
+      updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
+      break;
     default:
       updateMainModelContent("API is not yet designed!!");
   }
@@ -53,3 +56,4 @@ document
   .getElementById("tasksByPageNumber")
   .addEventListener("click", updateLink);
 document.getElementById("createNewTask").addEventListener("click", updateLink);
+document.getElementById("updateTask").addEventListener("click", updateLink);

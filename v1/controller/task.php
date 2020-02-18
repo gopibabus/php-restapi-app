@@ -119,6 +119,199 @@ if (array_key_exists("task_id", $_GET)) {
             exit;
         }
     } elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
+
+        try {
+
+            if ($_SERVER['CONTENT_TYPE'] !== 'application/json') {
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage("Content type is not set to JSON");
+                $response->send();
+                exit;
+            }
+
+            $rawPatchData = file_get_contents('php://input');
+
+            if (!$jsonData = json_decode($rawPatchData)) {
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage("Request body is not a valid JSON");
+                $response->send();
+                exit;
+            }
+
+
+
+            $title_updated = false;
+            $description_updated = false;
+            $deadline_updated = false;
+            $completed_updated = false;
+
+            $queryFields = "";
+
+            if (isset($jsonData->title)) {
+                $title_updated = true;
+                $queryFields .= "title = :title, ";
+            }
+
+            if (isset($jsonData->description)) {
+                $description_updated = true;
+                $queryFields .= "description = :description, ";
+            }
+
+            if (isset($jsonData->deadline)) {
+                $deadline_updated = true;
+                $queryFields .= "deadline = STR_TO_DATE(:deadline, '%d/%m/%Y %H:%i'), ";
+            }
+
+            if (isset($jsonData->completed)) {
+                $completed_updated = true;
+                $queryFields .= "completed = :completed, ";
+            }
+
+            $queryFields = rtrim($queryFields, ", ");
+
+            if (
+                $title_updated === false &&
+                $description_updated === false &&
+                $deadline_updated === false &&
+                $completed_updated === false
+            ) {
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage("No Task Fields Provided");
+                $response->send();
+                exit;
+            }
+
+            $query = $writeDb->prepare('
+            SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed
+            FROM tbl_tasks WHERE id = :taskid
+            ');
+
+            $query->bindParam(":taskid", $task_id, PDO::PARAM_INT);
+            $query->execute();
+
+            $rowCount = $query->rowCount();
+
+            if ($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(404);
+                $response->setSuccess(false);
+                $response->addMessage("No Task found to update");
+                $response->send();
+                exit;
+            }
+
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                $task = new Task(
+                    $row['id'],
+                    $row['title'],
+                    $row['description'],
+                    $row['deadline'],
+                    $row['completed']
+                );
+            }
+
+            $queryString = 'UPDATE tbl_tasks SET ' . $queryFields . ' WHERE id= :taskid';
+            $query = $writeDb->prepare($queryString);
+
+            if ($title_updated === true) {
+                $task->setTitle($jsonData->title);
+                $up_title = $task->getTitle();
+                $query->bindParam(':title', $up_title, PDO::PARAM_STR);
+            }
+
+            if ($description_updated === true) {
+                $task->setDescription($jsonData->description);
+                $up_description = $task->getDescription();
+                $query->bindParam(':description', $up_description, PDO::PARAM_STR);
+            }
+
+            if ($deadline_updated === true) {
+                $task->setDeadline($jsonData->deadline);
+                $up_deadline = $task->getDeadline();
+                $query->bindParam(':deadline', $up_deadline, PDO::PARAM_STR);
+            }
+
+            if ($completed_updated === true) {
+                $task->setCompleted($jsonData->completed);
+                $up_completed = $task->getCompleted();
+                $query->bindParam(':completed', $up_completed, PDO::PARAM_STR);
+            }
+
+            $query->bindParam(':taskid', $task_id, PDO::PARAM_INT);
+            $query->execute();
+
+            if ($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(400);
+                $response->setSuccess(false);
+                $response->addMessage("Task not updated");
+                $response->send();
+                exit;
+            }
+
+            $query = $writeDb->prepare(
+                'SELECT id, title, description, DATE_FORMAT(deadline, "%d/%m/%Y %H:%i") as deadline, completed
+                FROM tbl_tasks WHERE id= :taskid
+                '
+            );
+            $query->bindParam(':taskid', $task_id, PDO::PARAM_INT);
+            $query->execute();
+            $rowCount = $query->rowCount();
+
+            if ($rowCount === 0) {
+                $response = new Response();
+                $response->setHttpStatusCode(404);
+                $response->setSuccess(false);
+                $response->addMessage("No task found after update");
+                $response->send();
+                exit;
+            }
+
+            $taskArray = [];
+
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+                $task = new Task(
+                    $row['id'],
+                    $row['title'],
+                    $row['description'],
+                    $row['deadline'],
+                    $row['completed']
+                );
+                $taskArray[] =  $task->returnTaskAsArray();
+            }
+            $returnData = [];
+            $returnData['rows_returned'] = $rowCount;
+            $returnData['tasks'] = $taskArray;
+
+            $response = new Response();
+            $response->setHttpStatusCode(200);
+            $response->setSuccess(true);
+            $response->toCache(true);
+            $response->setData($returnData);
+            $response->send();
+            exit;
+        } catch (TaskException $ex) {
+            $response = new Response();
+            $response->setHttpStatusCode(400);
+            $response->setSuccess(false);
+            $response->addMessage($ex->getMessage());
+            $response->send();
+            exit;
+        } catch (PDOException $ex) {
+            error_log("Database query error -" . $ex, 0);
+            $response = new Response();
+            $response->setHttpStatusCode(400);
+            $response->setSuccess(false);
+            $response->addMessage("Failed to update task");
+            $response->send();
+            exit;
+        }
     } else {
         $response = new Response();
         $response->setHttpStatusCode(405);

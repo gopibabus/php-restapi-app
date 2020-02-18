@@ -36,6 +36,9 @@
         <button id="createNewTask" type="button" class="btn btn-lg btn-primary form-control mt-3" data-toggle="modal" data-target="#urlModal">
             CREATE NEW TASK (POST)
         </button>
+        <button id="updateTask" type="button" class="btn btn-lg btn-warning form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            UPDATE A TASK (PATCH)
+        </button>
 
     </div>
 
