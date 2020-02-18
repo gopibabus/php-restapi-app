@@ -3,38 +3,29 @@
  * @param {object} event
  */
 function updateLink(event) {
+    let title = event.target.innerText;
+    document.getElementById("codeSection").innerHTML = '';
     switch (event.target.id) {
         case "getTask":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}", title);
             break;
         case "deleteTask":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}", title);
             break;
         case "completedTasks":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/complete");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/complete", title);
             break;
         case "incompletedTasks":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent(
-                "https://restapi.gopibabu.live/v1/tasks/incomplete"
-            );
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/incomplete", title);
             break;
         case "allTasks":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks", title);
             break;
         case "tasksByPageNumber":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent(
-                "https://restapi.gopibabu.live/v1/tasks/page/{number}"
-            );
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/page/{number}", title);
             break;
         case "createNewTask":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks", title);
             let createTaskCode = `
             <section class="m-3 p-3 border border-primary">
             <code id="modalCode">
@@ -50,8 +41,7 @@ function updateLink(event) {
             document.getElementById("codeSection").innerHTML = createTaskCode;
             break;
         case "updateTask":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}", title);
             let updateTaskCode = `
             <section class="m-3 p-3 border border-primary">
             <code id="modalCode">
@@ -67,8 +57,7 @@ function updateLink(event) {
             document.getElementById("codeSection").innerHTML = updateTaskCode;
             break;
         case "createUser":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/users");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/users", title);
             let createUserCode = `
             <section class="m-3 p-3 border border-primary">
             <code id="modalCode">
@@ -83,8 +72,7 @@ function updateLink(event) {
             document.getElementById("codeSection").innerHTML = createUserCode;
             break;
         case "createSession":
-            document.getElementById("codeSection").innerHTML = '';
-            updateMainModelContent("https://restapi.gopibabu.live/v1/sessions");
+            updateMainModelContent("https://restapi.gopibabu.live/v1/sessions", title);
             let createSessionCode = `
             <section class="m-3 p-3 border border-primary">
             <code id="modalCode">
@@ -98,16 +86,18 @@ function updateLink(event) {
             document.getElementById("codeSection").innerHTML = createSessionCode;
             break;
         default:
-            updateMainModelContent("API is not yet designed!!");
+            updateMainModelContent("API is not yet designed!!", title);
     }
 }
 
 /**
- * Update modal text with content
+ * Update modal text and title with content
  * @param {string} api
+ * @param {string} title
  */
-function updateMainModelContent(api) {
+function updateMainModelContent(api, title) {
     document.getElementById("mainModalContent").innerHTML = api;
+    document.getElementById("mainModalLabel").innerHTML = title;
 }
 
 
