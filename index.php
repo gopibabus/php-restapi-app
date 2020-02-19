@@ -45,6 +45,9 @@
         <button id="createSession" type="button" class="btn btn-lg btn-secondary form-control mt-3" data-toggle="modal" data-target="#urlModal">
             CREATE A SESSION FOR A VALID USER
         </button>
+        <button id="destroySession" type="button" class="btn btn-lg btn-info form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            DESTROY A SESSION
+        </button>
 
     </div>
 

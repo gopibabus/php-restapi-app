@@ -1,4 +1,5 @@
 php_flag display_errors on
+SetEnvIf Authorization .+ HTTP_AUTHORIZATION=$0
 
 # Allow files and folders which are directly called
 RewriteEngine On
@@ -9,8 +10,9 @@ RewriteCond %{REQUEST_FILENAME}% !-f
 RewriteRule ^tasks/([0-9]+)$ controller/task.php?task_id=$1 [L]
 
 # Replace v1/controller/task.php?completed=Y   with v1/tasks/completed
-# Replace v1/controller/task.php?completed=N   with v1/tasks/incompleted
 RewriteRule ^tasks/complete$ controller/task.php?completed=Y [L]
+
+# Replace v1/controller/task.php?completed=N   with v1/tasks/incompleted
 RewriteRule ^tasks/incomplete$ controller/task.php?completed=N [L]
 
 # Replace v1/controller/task.php   with v1/tasks
@@ -21,6 +23,9 @@ RewriteRule ^tasks$ controller/task.php [L]
 
 # Replace v1/controller/users.php   with v1/users
 RewriteRule ^users$ controller/users.php [L]
+
+# Replace v1/controller/sessions.php?sessionid=1   with v1/sessions/1
+RewriteRule ^sessions/([0-9]+)$ controller/sessions.php?sessionid=$1 [L]
 
 # Replace v1/controller/sessions.php   with v1/sessions
 RewriteRule ^sessions$ controller/sessions.php [L]

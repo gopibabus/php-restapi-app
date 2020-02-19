@@ -85,6 +85,19 @@ function updateLink(event) {
             `;
             document.getElementById("codeSection").innerHTML = createSessionCode;
             break;
+        case "destroySession":
+            updateMainModelContent("https://restapi.gopibabu.live/v1/sessions/{sessionid}", title);
+            let destroySessionCode = `
+            <section class="m-3 p-3 border border-primary">
+                    <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    </p>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = destroySessionCode;
+            break;
         default:
             updateMainModelContent("API is not yet designed!!", title);
     }
@@ -111,3 +124,4 @@ document.getElementById("createNewTask").addEventListener("click", updateLink);
 document.getElementById("updateTask").addEventListener("click", updateLink);
 document.getElementById("createUser").addEventListener("click", updateLink);
 document.getElementById("createSession").addEventListener("click", updateLink);
+document.getElementById("destroySession").addEventListener("click", updateLink);
