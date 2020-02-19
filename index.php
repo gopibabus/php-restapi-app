@@ -48,6 +48,9 @@
         <button id="destroySession" type="button" class="btn btn-lg btn-info form-control mt-3" data-toggle="modal" data-target="#urlModal">
             DESTROY A SESSION
         </button>
+        <button id="renewSession" type="button" class="btn btn-lg btn-danger form-control mt-3" data-toggle="modal" data-target="#urlModal">
+            RENEW SESSION
+        </button>
 
     </div>
 

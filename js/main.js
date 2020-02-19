@@ -28,7 +28,13 @@ function updateLink(event) {
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks", title);
             let createTaskCode = `
             <section class="m-3 p-3 border border-primary">
-            <code id="modalCode">
+            <span class="font-weight-bolder">Headers</span> 
+            <p class="card card-text mt-3 p-3">
+            <span class="text-danger mt-3">Content-Type:</span><br>
+                application/json
+            </p>
+            <span class="font-weight-bolder">Request Body</span>
+            <code id="modalCode" class="card card-text p-3 mt-3">
                     {<br>
                     "title" : "New Title",<br>
                     "completed" : "Y",<br>
@@ -44,7 +50,13 @@ function updateLink(event) {
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}", title);
             let updateTaskCode = `
             <section class="m-3 p-3 border border-primary">
-            <code id="modalCode">
+            <span class="font-weight-bolder">Headers</span> 
+            <p class="card card-text mt-3 p-3">
+            <span class="text-danger mt-3">Content-Type:</span><br>
+                application/json
+            </p>
+            <span class="font-weight-bolder">Request Body</span>
+            <code id="modalCode" class="card card-text p-3 mt-3">
                     {<br>
                     "title" : "New Title",<br>
                     "completed" : "Y",<br>
@@ -60,7 +72,13 @@ function updateLink(event) {
             updateMainModelContent("https://restapi.gopibabu.live/v1/users", title);
             let createUserCode = `
             <section class="m-3 p-3 border border-primary">
-            <code id="modalCode">
+            <span class="font-weight-bolder">Headers</span> 
+            <p class="card card-text mt-3 p-3">
+            <span class="text-danger mt-3">Content-Type:</span><br>
+                application/json
+            </p>
+            <span class="font-weight-bolder">Request Body</span>
+            <code id="modalCode" class="card card-text p-3 mt-3">
                     {<br>
                     "fullname" : "New Title",<br>
                     "username" : "john",<br>
@@ -75,7 +93,13 @@ function updateLink(event) {
             updateMainModelContent("https://restapi.gopibabu.live/v1/sessions", title);
             let createSessionCode = `
             <section class="m-3 p-3 border border-primary">
-            <code id="modalCode">
+            <span class="font-weight-bolder">Headers</span> 
+            <p class="card card-text mt-3 p-3">
+            <span class="text-danger mt-3">Content-Type:</span><br>
+                application/json
+            </p>
+            <span class="font-weight-bolder">Request Body</span>
+            <code id="modalCode" class="card card-text p-3 mt-3">
                     {<br>
                     "username" : "john",<br>
                     "password": "john12345",<br>
@@ -97,6 +121,27 @@ function updateLink(event) {
              </section>
             `;
             document.getElementById("codeSection").innerHTML = destroySessionCode;
+            break;
+        case "renewSession":
+            updateMainModelContent("https://restapi.gopibabu.live/v1/sessions/{sessionid}", title);
+            let renewSessionCode = `
+            <section class="m-3 p-3 border border-primary">
+            <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    <span class="text-danger mt-3">Content-Type:</span><br>
+                        application/json
+                    </p>
+            <span class="font-weight-bolder">Request Body</span>
+            <code id="modalCode" class="card card-text p-3 mt-3">
+                    {<br>
+                    "refresh_token" : "Njc0MDQ1ODYyODk",<br>
+                    }<br>
+                </code>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = renewSessionCode;
             break;
         default:
             updateMainModelContent("API is not yet designed!!", title);
@@ -125,3 +170,4 @@ document.getElementById("updateTask").addEventListener("click", updateLink);
 document.getElementById("createUser").addEventListener("click", updateLink);
 document.getElementById("createSession").addEventListener("click", updateLink);
 document.getElementById("destroySession").addEventListener("click", updateLink);
+document.getElementById("renewSession").addEventListener("click", updateLink);
