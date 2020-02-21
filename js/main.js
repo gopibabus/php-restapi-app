@@ -8,21 +8,81 @@ function updateLink(event) {
     switch (event.target.id) {
         case "getTask":
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}", title);
+            let getTask = `
+            <section class="m-3 p-3 border border-primary">
+                    <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    </p>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = getTask;
             break;
         case "deleteTask":
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/{number}", title);
+            let deleteTask = `
+            <section class="m-3 p-3 border border-primary">
+                    <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    </p>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = deleteTask;
             break;
         case "completedTasks":
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/complete", title);
+            let completedTasks = `
+            <section class="m-3 p-3 border border-primary">
+                    <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    </p>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = completedTasks;
             break;
         case "incompletedTasks":
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/incomplete", title);
+            let incompletedTasks = `
+            <section class="m-3 p-3 border border-primary">
+                    <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    </p>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = incompletedTasks;
             break;
         case "allTasks":
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks", title);
+            let allTasks = `
+            <section class="m-3 p-3 border border-primary">
+                    <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    </p>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = allTasks;
             break;
         case "tasksByPageNumber":
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks/page/{number}", title);
+            let tasksByPageNumber = `
+            <section class="m-3 p-3 border border-primary">
+                    <span class="font-weight-bolder">Headers</span> 
+                    <p class="card card-text mt-3 p-3">
+                    <span class="text-danger">Authorization:</span><br>
+                        Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
+                    </p>
+             </section>
+            `;
+            document.getElementById("codeSection").innerHTML = tasksByPageNumber;
             break;
         case "createNewTask":
             updateMainModelContent("https://restapi.gopibabu.live/v1/tasks", title);
@@ -32,6 +92,8 @@ function updateLink(event) {
             <p class="card card-text mt-3 p-3">
             <span class="text-danger mt-3">Content-Type:</span><br>
                 application/json
+            <span class="text-danger mt-3">Authorization:</span><br>
+            Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
             </p>
             <span class="font-weight-bolder">Request Body</span>
             <code id="modalCode" class="card card-text p-3 mt-3">
@@ -54,6 +116,8 @@ function updateLink(event) {
             <p class="card card-text mt-3 p-3">
             <span class="text-danger mt-3">Content-Type:</span><br>
                 application/json
+            <span class="text-danger mt-3">Authorization:</span><br>
+            Njc0MDQ1ODYyODk5MzhmMWU5YTZjMjQ2MTc2ZjIyZjRmMWQ5MDA1N2RkNmY5NDIyMTU4MjEyNzM1OA==
             </p>
             <span class="font-weight-bolder">Request Body</span>
             <code id="modalCode" class="card card-text p-3 mt-3">
@@ -157,7 +221,6 @@ function updateMainModelContent(api, title) {
     document.getElementById("mainModalContent").innerHTML = api;
     document.getElementById("mainModalLabel").innerHTML = title;
 }
-
 
 document.getElementById("getTask").addEventListener("click", updateLink);
 document.getElementById("deleteTask").addEventListener("click", updateLink);

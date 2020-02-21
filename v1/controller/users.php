@@ -133,7 +133,7 @@
     $returnData['username'] = $username;
 
     $response = new Response();
-    $response->setHttpStatusCode(200);
+    $response->setHttpStatusCode(201);
     $response->setSuccess(true);
     $response->addMessage("User created");
     $response->setData($returnData);
