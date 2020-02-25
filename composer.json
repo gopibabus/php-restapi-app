@@ -1,0 +1,14 @@
+{
+  "name": "srungavg/restapi-php",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gopibabu Srungavarapu",
+      "email": "s.gopibbau@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/yaml": "^5.0"
+  }
+}

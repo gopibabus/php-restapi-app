@@ -1,0 +1,15 @@
+--- Database Credentials
+
+write-db:
+  host: "165.227.204.253"
+  db-name: "tasks_db"
+  charset: "utf8mb4"
+  username: "harika_ammu"
+  password: "harika_ammu"
+
+read-db:
+  host: "165.227.204.253"
+  db-name: "tasks_db"
+  charset: "utf8mb4"
+  username: "harika_ammu"
+  password: "harika_ammu"
