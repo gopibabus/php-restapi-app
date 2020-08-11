@@ -38,3 +38,4 @@
 
 - [ ] Add CORS (Cross-Origin Resource Sharing).
 - [ ] Amending the API to allow you to upload files (images).
+- [ ] Convert functional parts of the project into to OOPs.
